@@ -1,0 +1,12 @@
+NetAssetX – Scanner réseau & inventaire d’assets
+
+Fonctionnalités :
+- découverte d’hôtes
+- scan de ports TCP
+- identification de services
+- OS fingerprint heuristique
+- scoring de risques
+- export JSON & HTML
+
+Usage :
+python main.py
