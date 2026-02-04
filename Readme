@@ -1,23 +1,60 @@
-NetAssetX – Scanner réseau & inventaire d’assets
+# NetAssetX
 
-Fonctionnalités :
-- découverte d’hôtes
-- scan de ports TCP
-- identification de services
-- reverse DNS (nom de machine)
-- MAC via ARP (si local)
-- bannières / headers HTTP
-- infos TLS (CN, issuer, version)
+Scanner réseau local et inventaire d’assets avec enrichissement léger (reverse DNS, MAC, HTTP, TLS) et export JSON/HTML.
+
+## Fonctionnalités
+- Découverte d’hôtes (TCP probes)
+- Scan de ports TCP
+- Identification de services (bannières + heuristiques)
+- Reverse DNS (nom de machine)
+- MAC via ARP (si local L2)
+- Headers HTTP (requête HEAD)
+- TLS cert info (CN, issuer, version)
 - OS fingerprint heuristique
-- scoring de risques
-- export JSON & HTML
+- Scoring de risques
+- Export JSON et HTML
 
-Usage :
-python Main.py --target auto
-python Main.py --target 192.168.1.10
-python Main.py --target 192.168.1.10 --around
-python Main.py --target 192.168.1.0/24 --ports 22,80,443
+## Prérequis
+- Python 3
+- `jinja2` (voir `Requirement.txt`)
 
-Sorties :
-- JSON par défaut dans Data/Scans/
-- HTML par défaut dans report.html
+## Installation
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r Requirement.txt
+```
+
+## Utilisation rapide
+```bash
+python3 Main.py --target auto
+python3 Main.py --target 192.168.1.10
+python3 Main.py --target 192.168.1.10 --around
+python3 Main.py --target 192.168.1.0/24 --ports 22,80,443
+```
+
+## Options principales
+- `--target` : IP, CIDR, ou `auto` (réseau local)
+- `--around` : si `--target` est une IP, scanne le `/24` autour
+- `--mask` : masque utilisé avec `--around` ou `auto` (ex: 24)
+- `--ports` : liste de ports (ex: `22,80,443,8000-8100`)
+- `--discovery-ports` : ports utilisés pour la découverte d’hôtes
+- `--no-discovery` : désactive la découverte (scan direct)
+- `--no-rdns` : désactive reverse DNS
+- `--no-mac` : désactive la récupération MAC
+- `--no-http` : désactive HEAD HTTP
+- `--no-tls` : désactive infos TLS
+- `--json` : chemin de sortie JSON
+- `--html` : chemin de sortie HTML
+
+## Sorties
+- JSON par défaut dans `Data/Scans/scan_YYYY_MM_DD_HHMMSS.json`
+- HTML par défaut dans `report.html`
+
+## Notes techniques
+- La MAC est récupérable uniquement sur le même réseau L2 (ARP cache), sinon `N/A`.
+- Le TLS CN est récupéré via handshake, avec SNI basé sur le reverse DNS si disponible.
+- Les timeouts/threads sont réglables via options CLI (`--help`).
+
+## Sécurité et conformité
+Utiliser uniquement dans des environnements autorisés. Ce script n’est pas un outil d’audit offensif complet.
