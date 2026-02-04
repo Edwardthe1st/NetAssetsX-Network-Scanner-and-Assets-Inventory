@@ -4,9 +4,20 @@ Fonctionnalités :
 - découverte d’hôtes
 - scan de ports TCP
 - identification de services
+- reverse DNS (nom de machine)
+- MAC via ARP (si local)
+- bannières / headers HTTP
+- infos TLS (CN, issuer, version)
 - OS fingerprint heuristique
 - scoring de risques
 - export JSON & HTML
 
 Usage :
-python main.py
+python Main.py --target auto
+python Main.py --target 192.168.1.10
+python Main.py --target 192.168.1.10 --around
+python Main.py --target 192.168.1.0/24 --ports 22,80,443
+
+Sorties :
+- JSON par défaut dans Data/Scans/
+- HTML par défaut dans report.html

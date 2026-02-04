@@ -21,7 +21,11 @@ def scan_port(ip: str, port: int, timeout: float) -> tuple[int, str]:
 def scan_ports(ip: str, ports: list[int], timeout: float = 1.0, max_threads: int = 200) -> dict[int, str]:
     results = {}
 
-    with ThreadPoolExecutor(max_workers=max_threads) as executor:
+    if not ports:
+        return results
+
+    max_workers = min(max_threads, len(ports))
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = [
             executor.submit(scan_port, ip, port, timeout)
             for port in ports

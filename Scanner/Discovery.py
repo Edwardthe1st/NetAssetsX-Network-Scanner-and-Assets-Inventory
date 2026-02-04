@@ -28,11 +28,19 @@ def is_host_alive(ip: str, timeout: float = 0.5, probe_ports=None) -> bool:
     return False
 
 
-def discover_hosts(ip_list: list[str], timeout: float = 0.5, max_threads: int = 200) -> list[str]:
+def discover_hosts(
+    ip_list: list[str],
+    timeout: float = 0.5,
+    max_threads: int = 200,
+    probe_ports: list[int] | None = None,
+) -> list[str]:
     alive = []
 
     with ThreadPoolExecutor(max_workers=max_threads) as executor:
-        futures = {executor.submit(is_host_alive, ip, timeout): ip for ip in ip_list}
+        futures = {
+            executor.submit(is_host_alive, ip, timeout, probe_ports): ip
+            for ip in ip_list
+        }
         for f in as_completed(futures):
             ip = futures[f]
             try:

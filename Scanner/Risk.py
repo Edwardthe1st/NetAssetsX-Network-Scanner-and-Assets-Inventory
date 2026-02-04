@@ -18,6 +18,14 @@ def score_risk(open_ports: list[int]) -> dict:
         score += 1
         reasons.append("SSH exposé")
 
+    if 445 in open_ports:
+        score += 3
+        reasons.append("SMB exposé")
+
+    if 3389 in open_ports:
+        score += 3
+        reasons.append("RDP exposé")
+
     if score >= 6:
         level = "high"
     elif score >= 3:
