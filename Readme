@@ -3,6 +3,7 @@
 Scanner réseau local et inventaire d’assets avec enrichissement léger (reverse DNS, MAC, HTTP, TLS) et export JSON/HTML.
 
 ## Fonctionnalités
+
 - Découverte d’hôtes (TCP probes)
 - Scan de ports TCP
 - Identification de services (bannières + heuristiques)
@@ -15,10 +16,12 @@ Scanner réseau local et inventaire d’assets avec enrichissement léger (rever
 - Export JSON et HTML
 
 ## Prérequis
+
 - Python 3
 - `jinja2` (voir `Requirement.txt`)
 
 ## Installation
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
