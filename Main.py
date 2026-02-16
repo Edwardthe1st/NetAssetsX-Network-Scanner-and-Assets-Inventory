@@ -4,6 +4,7 @@ import os
 import socket
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
+from time import perf_counter
 
 from Scanner.Discovery import discover_hosts
 from Scanner.PortScan import scan_ports
@@ -11,6 +12,9 @@ from Scanner.Service import identify_services
 from Scanner.Os_Fingerprint import guess_os
 from Scanner.Risk import score_risk
 from Scanner.Enrich import reverse_dns, get_mac_from_arp
+from Reporting.Json_Export import export_json
+from Reporting.Html_Export import export_html
+from Reporting.Nmap_Export import export_nmap, render_nmap_output
 
 
 DEFAULT_PORTS = [
@@ -110,6 +114,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
         help="Masque utilisé avec --around ou target=auto (ex: 24)",
     )
     parser.add_argument(
+        "-p",
         "--ports",
         default=",".join(str(p) for p in DEFAULT_PORTS),
         help="Ports à scanner, ex: 22,80,443,8000-8100",
@@ -125,7 +130,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
         default=4096,
         help="Limite anti-scan massif",
     )
-    parser.add_argument("--no-discovery", action="store_true", help="Skip discovery")
+    parser.add_argument("-Pn", "--no-discovery", action="store_true", help="Skip discovery")
     parser.add_argument("--no-rdns", action="store_true", help="Désactive reverse DNS")
     parser.add_argument("--no-mac", action="store_true", help="Désactive récupération MAC")
     parser.add_argument("--no-http", action="store_true", help="Désactive HEAD HTTP")
@@ -145,6 +150,10 @@ def build_arg_parser() -> argparse.ArgumentParser:
 
     parser.add_argument("--json", default=None, help="Chemin de sortie JSON")
     parser.add_argument("--html", default="report.html", help="Chemin de sortie HTML")
+    parser.add_argument("-oN", "--nmap", default=None, help="Chemin de sortie texte style nmap")
+    parser.add_argument("--show-closed", action="store_true", help="Inclure ports non-open dans sortie nmap")
+    parser.add_argument("--reason", action="store_true", help="Inclure reason dans sortie nmap")
+    parser.add_argument("--print-nmap", action="store_true", help="Afficher sortie nmap en console")
 
     return parser
 
@@ -166,8 +175,11 @@ def main() -> None:
 
     os.makedirs("Data/Scans", exist_ok=True)
     timestamp = datetime.now().strftime("%Y_%m_%d_%H%M%S")
+    started_human = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    scan_started = perf_counter()
     json_path = args.json or f"Data/Scans/scan_{timestamp}.json"
     html_path = args.html
+    nmap_path = args.nmap or f"Data/Scans/scan_{timestamp}.nmap"
 
     print(f"[+] NetAssetX - Scan réseau démarré ({timestamp})")
     print(f"[+] Target: {resolved_target}")
@@ -216,7 +228,9 @@ def main() -> None:
         if not args.no_mac:
             mac = get_mac_from_arp(ip, timeout=args.arp_timeout)
 
-        open_ports = sorted([p for p, s in port_states.items() if s == "open"])
+        open_ports = sorted([p for p, info in port_states.items() if info.get("state") == "open"])
+        latencies = [info.get("latency_ms") for info in port_states.values() if info.get("latency_ms") is not None]
+        latency_ms = min(latencies) if latencies else None
         os_guess = guess_os(services)
         risk = score_risk(open_ports)
 
@@ -224,6 +238,8 @@ def main() -> None:
             "ip": ip,
             "reverse_dns": rdns,
             "mac": mac,
+            "latency_ms": latency_ms,
+            "port_states": port_states,
             "open_ports": open_ports,
             "services": services,
             "os": os_guess,
@@ -243,15 +259,20 @@ def main() -> None:
             except Exception as exc:
                 print(f"    - {ip}: erreur: {exc}")
 
+    scan_duration = perf_counter() - scan_started
     result = {
         "metadata": {
             "tool": "NetAssetX",
             "timestamp": timestamp,
+            "scan_started_human": started_human,
             "target_input": args.target,
             "target_resolved": resolved_target,
             "around": args.around,
             "mask": args.mask,
             "base_ip": base_ip,
+            "total_ips": len(ip_list),
+            "hosts_up": len(hosts_data),
+            "duration_seconds": round(scan_duration, 3),
             "ports_scanned": ports_to_scan,
             "discovery_ports": discovery_ports,
             "discovery_timeout": args.discovery_timeout,
@@ -270,20 +291,25 @@ def main() -> None:
                 "no_mac": args.no_mac,
                 "no_http": args.no_http,
                 "no_tls": args.no_tls,
+                "show_closed": args.show_closed,
+                "reason": args.reason,
             },
         },
         "hosts": sorted(hosts_data, key=lambda h: h["ip"]),
     }
 
-    from Reporting.Json_Export import export_json
-    from Reporting.Html_Export import export_html
-
     export_json(result, json_path)
     export_html(result, html_path)
+    export_nmap(result, nmap_path, show_closed=args.show_closed, show_reasons=args.reason)
+
+    if args.print_nmap:
+        print("")
+        print(render_nmap_output(result, show_closed=args.show_closed, show_reasons=args.reason))
 
     print("[+] Scan terminé")
     print(f"[+] JSON: {json_path}")
     print(f"[+] HTML: {html_path}")
+    print(f"[+] NMAP: {nmap_path}")
 
 
 if __name__ == "__main__":

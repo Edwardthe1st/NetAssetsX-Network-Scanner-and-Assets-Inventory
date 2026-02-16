@@ -46,20 +46,27 @@ HTML_TEMPLATE = """
       <thead>
         <tr>
           <th>Port</th>
+          <th>State</th>
+          <th>Reason</th>
           <th>Service</th>
+          <th>Version</th>
           <th>Banner</th>
           <th>HTTP</th>
           <th>TLS</th>
         </tr>
       </thead>
       <tbody>
-        {% for port, svc in host.services|dictsort %}
+        {% for port, pinfo in host.port_states|dictsort %}
+        {% set svc = host.services.get(port) %}
         <tr>
           <td><code>{{ port }}</code></td>
-          <td>{{ svc.service }}</td>
-          <td><div class="small">{{ svc.banner or "" }}</div></td>
+          <td>{{ pinfo.state }}</td>
+          <td><div class="small">{{ pinfo.reason or "" }}</div></td>
+          <td>{{ svc.service if svc else "unknown" }}</td>
+          <td><div class="small">{{ svc.version if svc else "" }}</div></td>
+          <td><div class="small">{{ svc.banner if svc else "" }}</div></td>
           <td>
-            {% if svc.http %}
+            {% if svc and svc.http %}
               <div class="small">{{ svc.http.status_line }}</div>
               {% if svc.http.headers.get('server') %}
                 <div class="small">Server: {{ svc.http.headers.get('server') }}</div>
@@ -70,7 +77,7 @@ HTML_TEMPLATE = """
             {% endif %}
           </td>
           <td>
-            {% if svc.tls %}
+            {% if svc and svc.tls %}
               <div class="small">CN: {{ svc.tls.cn }}</div>
               <div class="small">Issuer: {{ svc.tls.issuer_cn }}</div>
               <div class="small">Version: {{ svc.tls.version }}</div>

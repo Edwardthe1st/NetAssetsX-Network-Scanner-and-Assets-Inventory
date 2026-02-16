@@ -1,0 +1,322 @@
+{
+    "metadata": {
+        "tool": "NetAssetX",
+        "timestamp": "2026_02_16_133058",
+        "target_input": "auto",
+        "target_resolved": "10.69.42.203/24",
+        "around": false,
+        "mask": 24,
+        "base_ip": "10.69.42.203",
+        "ports_scanned": [
+            21,
+            22,
+            23,
+            25,
+            53,
+            80,
+            110,
+            139,
+            143,
+            443,
+            445,
+            3306,
+            3389,
+            8080
+        ],
+        "discovery_ports": [
+            80,
+            443,
+            22,
+            445,
+            3389
+        ],
+        "discovery_timeout": 0.4,
+        "portscan_timeout": 0.8,
+        "banner_timeout": 1.0,
+        "http_timeout": 2.0,
+        "tls_timeout": 2.0,
+        "rdns_timeout": 1.0,
+        "arp_timeout": 1.0,
+        "discovery_threads": 250,
+        "portscan_threads": 200,
+        "host_threads": 20,
+        "flags": {
+            "no_discovery": false,
+            "no_rdns": false,
+            "no_mac": false,
+            "no_http": false,
+            "no_tls": false
+        }
+    },
+    "hosts": [
+        {
+            "ip": "10.69.42.162",
+            "reverse_dns": null,
+            "mac": null,
+            "open_ports": [
+                22,
+                139,
+                445
+            ],
+            "services": {
+                "22": {
+                    "service": "ssh",
+                    "banner": "SSH-2.0-OpenSSH_for_Windows_9.5",
+                    "http": null,
+                    "tls": null
+                },
+                "139": {
+                    "service": "netbios-ssn",
+                    "banner": null,
+                    "http": null,
+                    "tls": null
+                },
+                "445": {
+                    "service": "microsoft-ds",
+                    "banner": null,
+                    "http": null,
+                    "tls": null
+                }
+            },
+            "os": {
+                "name": "Windows-like",
+                "confidence": 0.7
+            },
+            "risk": {
+                "score": 4,
+                "level": "medium",
+                "reasons": [
+                    "SSH expos\u00e9",
+                    "SMB expos\u00e9"
+                ]
+            }
+        },
+        {
+            "ip": "10.69.42.187",
+            "reverse_dns": null,
+            "mac": null,
+            "open_ports": [
+                139,
+                445
+            ],
+            "services": {
+                "139": {
+                    "service": "netbios-ssn",
+                    "banner": null,
+                    "http": null,
+                    "tls": null
+                },
+                "445": {
+                    "service": "microsoft-ds",
+                    "banner": null,
+                    "http": null,
+                    "tls": null
+                }
+            },
+            "os": {
+                "name": "Unknown",
+                "confidence": 0.3
+            },
+            "risk": {
+                "score": 3,
+                "level": "medium",
+                "reasons": [
+                    "SMB expos\u00e9"
+                ]
+            }
+        },
+        {
+            "ip": "10.69.42.207",
+            "reverse_dns": null,
+            "mac": null,
+            "open_ports": [
+                139,
+                445
+            ],
+            "services": {
+                "445": {
+                    "service": "microsoft-ds",
+                    "banner": null,
+                    "http": null,
+                    "tls": null
+                },
+                "139": {
+                    "service": "netbios-ssn",
+                    "banner": null,
+                    "http": null,
+                    "tls": null
+                }
+            },
+            "os": {
+                "name": "Unknown",
+                "confidence": 0.3
+            },
+            "risk": {
+                "score": 3,
+                "level": "medium",
+                "reasons": [
+                    "SMB expos\u00e9"
+                ]
+            }
+        },
+        {
+            "ip": "10.69.42.225",
+            "reverse_dns": null,
+            "mac": null,
+            "open_ports": [
+                22,
+                139,
+                445,
+                3306,
+                3389
+            ],
+            "services": {
+                "22": {
+                    "service": "ssh",
+                    "banner": "SSH-2.0-OpenSSH_for_Windows_9.5",
+                    "http": null,
+                    "tls": null
+                },
+                "3306": {
+                    "service": "mysql",
+                    "banner": null,
+                    "http": null,
+                    "tls": null
+                },
+                "445": {
+                    "service": "microsoft-ds",
+                    "banner": null,
+                    "http": null,
+                    "tls": null
+                },
+                "139": {
+                    "service": "netbios-ssn",
+                    "banner": null,
+                    "http": null,
+                    "tls": null
+                },
+                "3389": {
+                    "service": "ms-wbt-server",
+                    "banner": null,
+                    "http": null,
+                    "tls": null
+                }
+            },
+            "os": {
+                "name": "Windows-like",
+                "confidence": 0.7
+            },
+            "risk": {
+                "score": 7,
+                "level": "high",
+                "reasons": [
+                    "SSH expos\u00e9",
+                    "SMB expos\u00e9",
+                    "RDP expos\u00e9"
+                ]
+            }
+        },
+        {
+            "ip": "10.69.42.236",
+            "reverse_dns": null,
+            "mac": null,
+            "open_ports": [
+                445,
+                3306
+            ],
+            "services": {
+                "445": {
+                    "service": "microsoft-ds",
+                    "banner": null,
+                    "http": null,
+                    "tls": null
+                },
+                "3306": {
+                    "service": "mysql",
+                    "banner": null,
+                    "http": null,
+                    "tls": null
+                }
+            },
+            "os": {
+                "name": "Unknown",
+                "confidence": 0.3
+            },
+            "risk": {
+                "score": 3,
+                "level": "medium",
+                "reasons": [
+                    "SMB expos\u00e9"
+                ]
+            }
+        },
+        {
+            "ip": "10.69.42.237",
+            "reverse_dns": null,
+            "mac": null,
+            "open_ports": [
+                139,
+                445
+            ],
+            "services": {
+                "139": {
+                    "service": "netbios-ssn",
+                    "banner": null,
+                    "http": null,
+                    "tls": null
+                },
+                "445": {
+                    "service": "microsoft-ds",
+                    "banner": null,
+                    "http": null,
+                    "tls": null
+                }
+            },
+            "os": {
+                "name": "Unknown",
+                "confidence": 0.3
+            },
+            "risk": {
+                "score": 3,
+                "level": "medium",
+                "reasons": [
+                    "SMB expos\u00e9"
+                ]
+            }
+        },
+        {
+            "ip": "10.69.42.243",
+            "reverse_dns": null,
+            "mac": null,
+            "open_ports": [
+                139,
+                445
+            ],
+            "services": {
+                "139": {
+                    "service": "netbios-ssn",
+                    "banner": null,
+                    "http": null,
+                    "tls": null
+                },
+                "445": {
+                    "service": "microsoft-ds",
+                    "banner": null,
+                    "http": null,
+                    "tls": null
+                }
+            },
+            "os": {
+                "name": "Unknown",
+                "confidence": 0.3
+            },
+            "risk": {
+                "score": 3,
+                "level": "medium",
+                "reasons": [
+                    "SMB expos\u00e9"
+                ]
+            }
+        }
+    ]
+}

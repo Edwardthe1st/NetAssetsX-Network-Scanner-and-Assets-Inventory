@@ -1,0 +1,404 @@
+{
+    "metadata": {
+        "tool": "NetAssetX",
+        "timestamp": "2026_02_16_134045",
+        "scan_started_human": "2026-02-16 13:40:45",
+        "target_input": "auto",
+        "target_resolved": "10.69.42.203/24",
+        "around": false,
+        "mask": 24,
+        "base_ip": "10.69.42.203",
+        "total_ips": 254,
+        "hosts_up": 8,
+        "duration_seconds": 3.893,
+        "ports_scanned": [
+            22,
+            80,
+            443
+        ],
+        "discovery_ports": [
+            80,
+            443,
+            22,
+            445,
+            3389
+        ],
+        "discovery_timeout": 0.4,
+        "portscan_timeout": 0.8,
+        "banner_timeout": 1.0,
+        "http_timeout": 2.0,
+        "tls_timeout": 2.0,
+        "rdns_timeout": 1.0,
+        "arp_timeout": 1.0,
+        "discovery_threads": 250,
+        "portscan_threads": 200,
+        "host_threads": 20,
+        "flags": {
+            "no_discovery": false,
+            "no_rdns": false,
+            "no_mac": false,
+            "no_http": false,
+            "no_tls": false,
+            "show_closed": false,
+            "reason": false
+        }
+    },
+    "hosts": [
+        {
+            "ip": "10.69.42.162",
+            "reverse_dns": null,
+            "mac": null,
+            "latency_ms": 10.08,
+            "port_states": {
+                "22": {
+                    "state": "open",
+                    "reason": "connect-success",
+                    "error_code": 0,
+                    "latency_ms": 10.08
+                },
+                "443": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 800.57
+                },
+                "80": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 801.17
+                }
+            },
+            "open_ports": [
+                22
+            ],
+            "services": {
+                "22": {
+                    "service": "ssh",
+                    "banner": "SSH-2.0-OpenSSH_for_Windows_9.5",
+                    "http": null,
+                    "tls": null,
+                    "version": "OpenSSH for_Windows_9.5"
+                }
+            },
+            "os": {
+                "name": "Windows-like",
+                "confidence": 0.7
+            },
+            "risk": {
+                "score": 1,
+                "level": "low",
+                "reasons": [
+                    "SSH expos\u00e9"
+                ]
+            }
+        },
+        {
+            "ip": "10.69.42.187",
+            "reverse_dns": null,
+            "mac": null,
+            "latency_ms": 804.36,
+            "port_states": {
+                "443": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 804.36
+                },
+                "80": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 804.88
+                },
+                "22": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 805.42
+                }
+            },
+            "open_ports": [],
+            "services": {},
+            "os": {
+                "name": "Unknown",
+                "confidence": 0.3
+            },
+            "risk": {
+                "score": 0,
+                "level": "low",
+                "reasons": []
+            }
+        },
+        {
+            "ip": "10.69.42.207",
+            "reverse_dns": null,
+            "mac": null,
+            "latency_ms": 800.41,
+            "port_states": {
+                "80": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 800.41
+                },
+                "443": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 806.36
+                },
+                "22": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 806.66
+                }
+            },
+            "open_ports": [],
+            "services": {},
+            "os": {
+                "name": "Unknown",
+                "confidence": 0.3
+            },
+            "risk": {
+                "score": 0,
+                "level": "low",
+                "reasons": []
+            }
+        },
+        {
+            "ip": "10.69.42.225",
+            "reverse_dns": null,
+            "mac": null,
+            "latency_ms": 4.62,
+            "port_states": {
+                "22": {
+                    "state": "open",
+                    "reason": "connect-success",
+                    "error_code": 0,
+                    "latency_ms": 4.62
+                },
+                "80": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 802.07
+                },
+                "443": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 802.08
+                }
+            },
+            "open_ports": [
+                22
+            ],
+            "services": {
+                "22": {
+                    "service": "ssh",
+                    "banner": "SSH-2.0-OpenSSH_for_Windows_9.5",
+                    "http": null,
+                    "tls": null,
+                    "version": "OpenSSH for_Windows_9.5"
+                }
+            },
+            "os": {
+                "name": "Windows-like",
+                "confidence": 0.7
+            },
+            "risk": {
+                "score": 1,
+                "level": "low",
+                "reasons": [
+                    "SSH expos\u00e9"
+                ]
+            }
+        },
+        {
+            "ip": "10.69.42.232",
+            "reverse_dns": null,
+            "mac": null,
+            "latency_ms": 92.38,
+            "port_states": {
+                "80": {
+                    "state": "open",
+                    "reason": "connect-success",
+                    "error_code": 0,
+                    "latency_ms": 92.38
+                },
+                "443": {
+                    "state": "open",
+                    "reason": "connect-success",
+                    "error_code": 0,
+                    "latency_ms": 92.46
+                },
+                "22": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 801.46
+                }
+            },
+            "open_ports": [
+                80,
+                443
+            ],
+            "services": {
+                "80": {
+                    "service": "http",
+                    "banner": null,
+                    "http": {
+                        "status_line": "HTTP/1.1 404 Not Found",
+                        "headers": {
+                            "content-type": "text/plain; charset=utf-8",
+                            "x-content-type-options": "nosniff",
+                            "date": "Mon, 16 Feb 2026 12:40:49 GMT",
+                            "content-length": "19",
+                            "connection": "close"
+                        }
+                    },
+                    "tls": null,
+                    "version": "HTTP/1.1 404 Not Found"
+                },
+                "443": {
+                    "service": "https",
+                    "banner": null,
+                    "http": {
+                        "status_line": "HTTP/1.1 404 Not Found",
+                        "headers": {
+                            "content-type": "text/plain; charset=utf-8",
+                            "x-content-type-options": "nosniff",
+                            "date": "Mon, 16 Feb 2026 12:40:49 GMT",
+                            "content-length": "19",
+                            "connection": "close"
+                        }
+                    },
+                    "tls": null,
+                    "version": "HTTP/1.1 404 Not Found"
+                }
+            },
+            "os": {
+                "name": "Unknown",
+                "confidence": 0.3
+            },
+            "risk": {
+                "score": 0,
+                "level": "low",
+                "reasons": []
+            }
+        },
+        {
+            "ip": "10.69.42.236",
+            "reverse_dns": null,
+            "mac": null,
+            "latency_ms": 800.51,
+            "port_states": {
+                "443": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 800.51
+                },
+                "22": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 801.27
+                },
+                "80": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 801.28
+                }
+            },
+            "open_ports": [],
+            "services": {},
+            "os": {
+                "name": "Unknown",
+                "confidence": 0.3
+            },
+            "risk": {
+                "score": 0,
+                "level": "low",
+                "reasons": []
+            }
+        },
+        {
+            "ip": "10.69.42.237",
+            "reverse_dns": null,
+            "mac": null,
+            "latency_ms": 803.61,
+            "port_states": {
+                "80": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 803.61
+                },
+                "443": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 803.74
+                },
+                "22": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 804.75
+                }
+            },
+            "open_ports": [],
+            "services": {},
+            "os": {
+                "name": "Unknown",
+                "confidence": 0.3
+            },
+            "risk": {
+                "score": 0,
+                "level": "low",
+                "reasons": []
+            }
+        },
+        {
+            "ip": "10.69.42.243",
+            "reverse_dns": null,
+            "mac": null,
+            "latency_ms": 802.83,
+            "port_states": {
+                "22": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 802.88
+                },
+                "443": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 802.83
+                },
+                "80": {
+                    "state": "filtered",
+                    "reason": "errno-35",
+                    "error_code": 35,
+                    "latency_ms": 802.95
+                }
+            },
+            "open_ports": [],
+            "services": {},
+            "os": {
+                "name": "Unknown",
+                "confidence": 0.3
+            },
+            "risk": {
+                "score": 0,
+                "level": "low",
+                "reasons": []
+            }
+        }
+    ]
+}

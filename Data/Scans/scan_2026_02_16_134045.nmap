@@ -1,0 +1,68 @@
+Starting NetAssetX (Nmap-like) at 2026-02-16 13:40:45
+
+Nmap scan report for 10.69.42.162
+Host is up (0.0101s latency).
+Not shown: 2 filtered tcp ports
+PORT      STATE     SERVICE     VERSION
+22/tcp    open      ssh         OpenSSH for_Windows_9.5
+OS details: Windows-like (confidence 0.70)
+Risk: low (score 1) [SSH exposé]
+
+Nmap scan report for 10.69.42.187
+Host is up (0.8044s latency).
+Not shown: 3 filtered tcp ports
+PORT      STATE     SERVICE     VERSION
+No open ports found.
+OS details: Unknown (confidence 0.30)
+Risk: low (score 0)
+
+Nmap scan report for 10.69.42.207
+Host is up (0.8004s latency).
+Not shown: 3 filtered tcp ports
+PORT      STATE     SERVICE     VERSION
+No open ports found.
+OS details: Unknown (confidence 0.30)
+Risk: low (score 0)
+
+Nmap scan report for 10.69.42.225
+Host is up (0.0046s latency).
+Not shown: 2 filtered tcp ports
+PORT      STATE     SERVICE     VERSION
+22/tcp    open      ssh         OpenSSH for_Windows_9.5
+OS details: Windows-like (confidence 0.70)
+Risk: low (score 1) [SSH exposé]
+
+Nmap scan report for 10.69.42.232
+Host is up (0.0924s latency).
+Not shown: 1 filtered tcp ports
+PORT      STATE     SERVICE     VERSION
+80/tcp    open      http        HTTP/1.1 404 Not Found
+443/tcp   open      https       HTTP/1.1 404 Not Found
+OS details: Unknown (confidence 0.30)
+Risk: low (score 0)
+
+Nmap scan report for 10.69.42.236
+Host is up (0.8005s latency).
+Not shown: 3 filtered tcp ports
+PORT      STATE     SERVICE     VERSION
+No open ports found.
+OS details: Unknown (confidence 0.30)
+Risk: low (score 0)
+
+Nmap scan report for 10.69.42.237
+Host is up (0.8036s latency).
+Not shown: 3 filtered tcp ports
+PORT      STATE     SERVICE     VERSION
+No open ports found.
+OS details: Unknown (confidence 0.30)
+Risk: low (score 0)
+
+Nmap scan report for 10.69.42.243
+Host is up (0.8028s latency).
+Not shown: 3 filtered tcp ports
+PORT      STATE     SERVICE     VERSION
+No open ports found.
+OS details: Unknown (confidence 0.30)
+Risk: low (score 0)
+
+Nmap done: 254 IP addresses (8 hosts up) scanned in 3.89 seconds
