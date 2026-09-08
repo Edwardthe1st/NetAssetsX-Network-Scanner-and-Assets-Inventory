@@ -1,94 +1,92 @@
-# NetAssetX
+# NetAssetsX
 
-Scanner reseau local oriente inventaire d'assets, avec rendu et options proches de `nmap`.
+A local network scanner and asset inventory tool, written in Python. It discovers live hosts on a subnet, scans their TCP ports, identifies services, and produces an inventory with JSON, HTML and Nmap-style output.
 
-## Overview
-- Decouverte des hotes actifs sur le reseau local.
-- Scan TCP multi-threads.
-- Enrichissement service/version (banner, HTTP, TLS).
-- Reverse DNS, MAC (ARP local), estimation OS, scoring risque.
-- Exports `JSON`, `HTML` et sortie texte `Nmap-like`.
+Built to understand how a scanner like nmap works from the inside: host discovery, port states, service and version detection, OS fingerprinting and risk scoring, each implemented from scratch rather than shelled out to an external tool.
 
-## Features
-- Host discovery (TCP probes)
-- TCP connect scan
-- Service identification (`service` + `version`)
-- Reverse DNS (hostname)
-- MAC via ARP (local L2)
-- HTTP headers (HEAD)
-- TLS cert info (CN, issuer, TLS version)
-- Heuristic OS fingerprint
-- Risk scoring
-- JSON + HTML + Nmap-like exports
+> **Authorised use only.** Run this against your own network or a network you have permission to scan. Port scanning networks you don't control is illegal in most countries.
 
-## Requirements
-- Python 3
-- Dependency: `jinja2`
+---
+
+## What it does
+
+- **Host discovery** — finds live hosts on the local subnet with TCP probes
+- **Port scanning** — multi-threaded TCP connect scan
+- **Service identification** — service and version from banners, HTTP HEAD, and TLS
+- **Host detail** — reverse DNS, MAC address via the local ARP cache, heuristic OS fingerprint
+- **Risk scoring** — a simple score per host based on what's exposed
+- **Exports** — JSON, HTML, and an Nmap-like text format, plus a diff between two scans
+
+The pipeline is split into a `Scanner/` package (discovery, port scan, service, OS fingerprint, enrichment, risk) and a `Reporting/` package (JSON, HTML, Nmap-style, diff), tied together by `Main.py`.
+
+---
 
 ## Setup
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r Requirement.txt
 ```
 
-## Quick Start
+The only dependency is Jinja2, used for the HTML report.
+
+---
+
+## Usage
+
+Scan the local subnet automatically:
+
 ```bash
 python3 Main.py --target auto
 ```
 
-## Nmap-like Commands
-### Scan default local subnet
-```bash
-python3 Main.py --target auto
-```
+A single host, skipping discovery:
 
-### Scan one host (no discovery)
 ```bash
 python3 Main.py --target 192.168.1.10 -Pn
 ```
 
-### Scan around one host (/24)
-```bash
-python3 Main.py --target 192.168.1.10 --around
-```
+Custom ports with Nmap-style output:
 
-### Custom ports (`-p`) + normal output (`-oN`)
 ```bash
 python3 Main.py --target 192.168.1.0/24 -p 22,80,443 -oN scan.nmap
 ```
 
-### Show reason and non-open ports in Nmap output
+Show reasons and closed ports in the console:
+
 ```bash
 python3 Main.py --target auto --show-closed --reason --print-nmap
 ```
 
-## Key Options
-- `--target` : IP, CIDR ou `auto`
-- `--around` : si `--target` est une IP, scanne le `/24` autour
-- `-p`, `--ports` : ports a scanner (`22,80,443,8000-8100`)
-- `-Pn`, `--no-discovery` : desactive host discovery
-- `--discovery-ports` : ports utilises pour detecter les hotes vivants
-- `--no-rdns` : desactive reverse DNS
-- `--no-mac` : desactive recuperation MAC
-- `--no-http` : desactive collecte HTTP
-- `--no-tls` : desactive collecte TLS
-- `--json` : chemin de sortie JSON
-- `--html` : chemin de sortie HTML
-- `-oN`, `--nmap` : chemin de sortie texte style nmap
-- `--show-closed` : inclut closed/filtered dans le rapport nmap
-- `--reason` : ajoute la colonne reason dans le rapport nmap
-- `--print-nmap` : affiche le rendu nmap dans la console
+### Main options
 
-## Outputs
+| Option | Purpose |
+| --- | --- |
+| `--target` | IP, CIDR, or `auto` |
+| `--around` | scan the /24 around a single target IP |
+| `-p`, `--ports` | ports to scan (`22,80,443,8000-8100`) |
+| `-Pn`, `--no-discovery` | skip host discovery |
+| `--no-rdns` / `--no-mac` / `--no-http` / `--no-tls` | turn off individual enrichment steps |
+| `--json` / `--html` / `-oN` | output paths for each format |
+| `--show-closed` / `--reason` / `--print-nmap` | Nmap-style output detail |
+
+Threads and timeouts for each stage are tunable too — see `python3 Main.py --help`.
+
+---
+
+## Output
+
 - JSON: `Data/Scans/scan_YYYY_MM_DD_HHMMSS.json`
 - HTML: `report.html`
 - Nmap-like: `Data/Scans/scan_YYYY_MM_DD_HHMMSS.nmap`
 
-## Notes
-- La MAC est visible uniquement sur le meme segment L2 (ARP cache), sinon `N/A`.
-- Le scan est un `TCP connect scan`, pas un SYN raw scan comme `nmap -sS`.
-- La detection de version reste heuristique, donc moins precise que `nmap -sV`.
+---
 
-## Safety
-Utiliser uniquement dans des environnements autorises.
+## Known limits
+
+This is a learning project, and it makes deliberate trade-offs against a tool like nmap:
+
+- It's a TCP connect scan, not a raw SYN scan, so it's noisier and slower.
+- Version detection is heuristic, so less precise than `nmap -sV`.
+- MAC addresses only resolve on the same L2 segment (via the ARP cache); otherwise `N/A`.
